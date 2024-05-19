@@ -24,6 +24,11 @@ CREATE TABLE adhoc.test
     value Nullable(int) default 100,
     location varchar(256) default 'seoul'
 );
+-- IF NOT EXISTS
+/*
+ 위의 CREATE TABLE 문장을 다시 실행하면 에러 발생;
+ CREATE TABLE IF NOT EXISTS adhoc.test를 실행하면 에러 없이 테이블이 이미 있기에 무시됨
+*/
 -- 기본키 유일성이 안 지켜지는 것 확인
 INSERT INTO adhoc.test VALUES (1, 2, 3), (1, 3, 4);
 SELECT * FROM adhoc.test;
@@ -78,6 +83,8 @@ DESCRIBE adhoc.test;
 ```
 -- 테이블 삭제
 DROP TABLE analytics.channel;
+DROP TABLE analytics.channel;           -- 없는 테이블을 삭제하려 하기에 에러 발생
+DROP TABLE IF EXISTS analytics.channel; -- IF EXISTS를 붙이면 에러가 발생하지 않음
 
 -- id=1인 레코드들을 adhoc.test2에서 삭제하기
 SELECT * FROM adhoc.test2;
